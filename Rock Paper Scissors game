@@ -1,0 +1,105 @@
+/******************************************************************
+* Program Assignment #2
+*
+* Programmer: Ethan Isayas 
+*
+* Due Date: 3/23/25
+*
+* EGRE 245, Spring 2025 Instructor: Mark Schwitzerlett
+*
+* Pledge: I have neither given nor received unauthorized aid on this program.
+*
+* Description: Computer generated rock paper scissors rounds. 
+*
+* Input: Bot names and rounds/
+*
+* Output: rounds won. 
+*
+******************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    const int ROCK = 0;
+    const int PAPER = 1;
+    const int SCISSORS = 2;
+    int seed;
+    
+    printf("\nInput a positive integer (seed for the random number generator): ");
+    scanf("%d", &seed);
+    srand(seed);
+    
+    char p1[40], p2[40];
+    int rds;
+    
+    printf("Programming Assignment #2 Rock, Paper, Scissors - Your Name\n");
+    printf("EGRE 245: Introduction to Programming Using C, Due: March 23, 2025\n\n");
+    
+    printf("Enter Player 1's name: ");
+    scanf("%s", p1);
+    printf("Enter Player 2's name: ");
+    scanf("%s", p2);
+    
+    do {
+        printf("Enter number of rounds: ");
+        scanf("%d", &rds);
+        
+        if (rds < 1) {
+            printf("Error.\n");
+        }
+    } while (rds < 1);
+    
+    printf("\n%s vs %s - Playing %d rounds!\n\n", p1, p2, rds);
+    
+    int s1 = 0, s2 = 0;
+    
+    for (int i = 1; i <= rds; i++) {
+        int m1, m2;
+        
+        do {
+            m1 = rand() % 3;
+            m2 = rand() % 3;
+        } while (m1 == m2);
+        
+        printf("Round %d: %s chooses ", i, p1);
+        
+        if (m1 == ROCK) {
+            printf("Rock");
+        } else if (m1 == PAPER) {
+            printf("Paper");
+        } else {
+            printf("Scissors");
+        }
+        
+        printf(", %s chooses ", p2);
+        
+        if (m2 == ROCK) {
+            printf("Rock\n");
+        } else if (m2 == PAPER) {
+            printf("Paper\n");
+        } else {
+            printf("Scissors\n");
+        }
+        
+        if ((m1 == ROCK && m2 == SCISSORS) || (m1 == PAPER && m2 == ROCK) || (m1 == SCISSORS && m2 == PAPER)) {
+            printf("%s wins this round!\n\n", p1);
+            s1++;
+        } else {
+            printf("%s wins this round!\n\n", p2);
+            s2++;
+        }
+    }
+    
+    printf("Final Score: %s - %d, %s - %d\n", p1, s1, p2, s2);
+    
+    if (s1 > s2) {
+        printf("Overall Winner: %s!\n", p1);
+    } else {
+        printf("Overall Winner: %s!\n", p2);
+    }
+    
+    return 0;
+}
+
+
+
