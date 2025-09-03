@@ -1,0 +1,81 @@
+/******************************************************************
+ * Program #: Lab #6
+ *
+ * Programmer: Thomas Lee, Ethan Isayas
+ *
+ * Due Scheduled meeting: February 28, 2024
+ *
+ * EGRE 245, Spring 2024       Instructor: Robert Klenke
+ *
+ * Pledge: I have neither given nor received unauthorized aid on this program.
+ *
+ * Description: Program designed to calculate students' final grade.
+ *
+ * Input: Grade for each type of assignment
+ *
+ * Output: Final percentage and letter grade.
+ *
+ ******************************************************************/
+
+#include <stdio.h>
+#include <ctype.h>
+
+//grading scale * 100 for percentage
+#define hw 10
+#define lab 10
+#define test 15
+#define midt 15
+#define proj 30
+#define final 20
+
+
+int main(void)
+{
+  double gradeHw, gradeLab, gradeTest, gradeMidt, gradeProj, gradeFinal;
+  double scaleHw, scaleLab, scaleTest, scaleMidt, scaleProj, scaleFinal;
+  double perHw, perLab, perTest, perMidt, perProj, perFinal, perTotal;
+
+  //Printing name and operation
+  printf("Lab #4 - Thomas Lee, Ethan Isayas\n");
+  printf("Program to calculate final course grade\n\n");
+
+  //Printing grade scale
+  printf("Gourse Grading Policy:\n");
+  printf("Homework:\t10.00%%\n");
+  printf("Labs\t\t10.00%%\n");
+  printf("Tests\t\t15.00%%\n");
+  printf("Midterm Exam\t15.00%%\n");
+  printf("Project\t\t30.00%%\n");
+  printf("Final Exam\t20.00%%\n");
+  
+  printf("***************************************\n\n");
+
+  //Obtaining data
+  printf("Enter Homework Grade (grade/scale)? ");
+  scanf("%lf/%lf", &gradeHw, &scaleHw); 
+  printf("Enter Lab Grade (grade/scale)? ");
+  scanf("%lf/%lf",&gradeLab, &scaleLab);
+  printf("Enter Test Grade (grade/scale)? ");
+  scanf("%lf/%lf",&gradeTest, &scaleTest);
+  printf("Enter Midterm Grade (grade/scale)? ");
+  scanf("%lf/%lf",&gradeMidt, &scaleMidt);
+  printf("Enter Project Grade (grade/scale)? ");
+  scanf("%lf/%lf", &gradeProj, &scaleProj);
+  printf("Enter Final Exam Grade (grade/scale)? ");
+  scanf("%lf/%lf",&gradeFinal, &scaleFinal);
+
+  //Math
+  perHw = (gradeHw / scaleHw) * hw;
+  perLab = (gradeLab / scaleLab) * lab;
+  perTest = (gradeTest / scaleTest) * test;
+  perMidt = (gradeMidt / scaleMidt) * midt;
+  perProj = (gradeProj / scaleProj) * proj;
+  perFinal = (gradeFinal / scaleFinal) * final;
+  perTotal = perLab + perHw + perTest + perMidt + perProj + perFinal;
+
+  //Prints results
+  printf("\nFinal Grade = %.2lf", perTotal);
+  
+  return 0;
+}
+
