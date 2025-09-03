@@ -1,0 +1,89 @@
+/******************************************************************
+ * Program #: Lab #5
+ *
+ * Programmer: Thomas Lee, Ethan Isayas
+ *
+ * Due Scheduled meeting: February 21, 2024
+ *
+ * EGRE 245, Spring 2024       Instructor: Robert Klenke
+ *
+ * Pledge: I have neither given nor received unauthorized aid on this program.
+ *
+ * Description: The program uses user input of object initial height and speed and determines the time to fall and impact speed 
+ *
+ * Input: Initial drop height in feet or meters
+ *
+ * Output: Time to fall and impact velocity, in ft/sec + mph or m/sec + kph
+ *
+ ******************************************************************/
+
+#include <stdio.h>
+#define gravityEng 32.1745
+#define gravitySi 9.807
+#define dt 0.000001
+#define convertEng 0.681818
+#define convertSI 3.6
+
+int main(void)
+{
+  double heightInitial, Time, secImSpeed, hourImSpeed, p, v, nextPos, nextSpeed;
+  char unitChoice;
+  
+  printf("Lab #4 - Thomas Lee, Ethan Isayas\n");
+  printf("Program to calculate fall time and impact speed of a \n");
+  printf("falling object dropped from a specific height\n\n");
+
+  printf("Enter initial height <sp> and units (f or m) ?");
+  scanf("%lf %c", &heightInitial, &unitChoice);
+  
+
+  //MATH
+
+  //English
+  if (unitChoice == 'f' || unitChoice == 'F') {
+    Time = 0;
+    v = 0;
+    p = heightInitial;
+    
+    
+    while (p > 0) {
+      nextSpeed = v + gravityEng * dt;
+      nextPos = p - nextSpeed * dt;
+      p = nextPos;
+      v = nextSpeed;
+      Time += dt;
+      
+    }
+  
+    hourImSpeed = v * convertEng;
+    printf("Fall time = %0.6lf sec\n", Time);
+    printf("Impact speed = %0.6lf ft/sec\n", v);
+    printf("Impact speed = %0.6lf mph", hourImSpeed);
+  }
+
+  //Imperial
+  else if (unitChoice == 'm') { 
+    Time = 0;
+    v = 0;
+    p = heightInitial;
+    while (p > 0) {
+      nextSpeed = v + gravitySi * dt;
+      nextPos = p - nextSpeed * dt;
+      p = nextPos;
+      v = nextSpeed;
+      Time += dt;
+    }
+
+    hourImSpeed = v * convertSI;
+    printf("Fall time = %0.6lf sec\n", Time);
+    printf("Impact speed = %0.6lf m/sec\n", v);
+    printf("Impact speed = %0.6lf kph", hourImSpeed);
+  }
+  else {
+    printf("%c is not a valid choice.", unitChoice);
+  } //Error
+  
+
+  return 0;
+}
+
