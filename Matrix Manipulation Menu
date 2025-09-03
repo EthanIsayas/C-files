@@ -1,0 +1,128 @@
+/******************************************************************
+ * Program #: Lab #10
+ *
+ * Programmer: Ethan Isayas, Malkiel Parr
+ *
+ * Due Date: 4/3/24
+ *
+ * EGRE 245, Spring 2024       Instructor: Robert Klenke
+ *
+ * Pledge: I have neither given nor received unauthorized aid on this program.
+ *
+ * Description: Program to manipulate Matricies (i.e., 2D arrays) using functions.
+ *
+ * Input: Units - Matrix data from files via command line redirection
+ *
+ * Output: Results of matrix multiplications
+ *
+ ******************************************************************/
+#include <stdio.h>
+
+#define ROWS  4
+#define COLS  4
+
+// Input array data from the command line and
+// put it into a matrix. Note that, unlike a
+// simple array, the compiler needs to know
+// the order of the matrix (at least the second
+// dimension). Here we tell it both orders.
+void inputData(int imatrix[ROWS][COLS]) {
+  
+  for (int i=0; i < ROWS; i++) {
+    for (int j=0; j < COLS; j++) {
+      scanf("%i", &imatrix[i][j]);
+    
+    }
+  }
+}
+ 
+
+
+  
+// multiply a matrix by a single scalar value
+void multiply_s(int imatrix[ROWS][COLS], int omatrix[ROWS][COLS], int scalar){
+	for (int i=0; i < ROWS; i++) {
+		for (int j=0; j < COLS; j++) {
+			omatrix[i][j] = imatrix[i][j] * scalar;
+    }
+  }
+}
+
+// multiply two matricies together and put the
+// resulting values into a third matrix. Multiplication
+// must be done in a set of loops
+void multiply_m(int imatrix1[ROWS][COLS], int imatrix2[ROWS][COLS], int omatrix[ROWS][COLS]){
+	for (int i=0; i < ROWS; i++) {
+		for (int j=0; j < COLS; j++) {
+			omatrix[i] [j] = 0;
+			for (int k = 0; k < COLS; k++) {
+			omatrix[i][j] += imatrix1[i][k] * imatrix2[k][j];
+			}
+		}
+    }
+  
+}
+
+
+void print_matrix(int imatrix[ROWS][COLS]){
+  printf("---------------Matrix contents---------------\n");
+  
+  for (int i=0 ; i < ROWS; i++){
+	  printf("| \t");
+    for (int j=0; j < COLS; j++) {
+      printf("%d\t", imatrix[i][j]);
+	  
+    }
+	printf("|");
+	printf("\n");
+  }
+}
+
+  
+// main program to test the function impelementation
+int main(void) {
+
+  int a_matrix[ROWS][COLS];
+  int b_matrix[ROWS][COLS];
+  int c_matrix[ROWS][COLS];
+  int d_matrix[ROWS][COLS];
+
+
+  inputData(a_matrix);
+  inputData(b_matrix);
+
+  printf("\tMatrix A\n");
+  print_matrix(a_matrix);
+
+  printf("\tMatrix B\n");
+  print_matrix(b_matrix);
+  
+  
+  multiply_s(a_matrix, c_matrix, 3);
+  printf("\tMatrix C = Matrix A * 3\n");
+  print_matrix(c_matrix);
+  
+  
+  multiply_m(a_matrix, b_matrix, c_matrix);
+  printf("\tMatrix C = Matrix A * Matrix B\n");
+  print_matrix(c_matrix);
+  
+  multiply_m(b_matrix, a_matrix, c_matrix);
+  printf("\tMatrix C = Matrix B * Matrix A\n");
+  print_matrix(c_matrix);
+
+  inputData(d_matrix);
+  printf("\tMatrix D\n");
+  print_matrix(d_matrix);
+
+  multiply_m(a_matrix, d_matrix, c_matrix);
+  printf("\tMatrix C = Matrix A * Matrix D\n");
+  print_matrix(c_matrix);
+
+  multiply_m(d_matrix, a_matrix, c_matrix);
+  printf("\tMatrix C = Matrix D * Matrix A\n");
+  print_matrix(c_matrix);
+
+  return 0;
+}
+
