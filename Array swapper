@@ -1,0 +1,110 @@
+/******************************************************************
+ * Program #: Lab #7
+ *
+ * Programmer: Thomas Lee, Ethan Isayas
+ *
+ * Due Scheduled meeting: March 13, 2024
+ *
+ * EGRE 245, Spring 2024       Instructor: Robert Klenke
+ *
+ * Pledge: I have neither given nor received unauthorized aid on this program.
+ *
+ * Description: Program designed to create an array from user input, and then find the smallest and largest values in the array. The sum and average of the array are also calculated. The program then prints out the original array and the modified array with the smallest and largest values swapped.
+ *
+ * Input: Input a list of numbers followed by -1 to end the list.
+ *
+ * Output: Outputs the smallest and largest number and their respective index, the sum of the array, the average of the array, the original array, and the array with the smallest and largest numbers swapped.
+ *
+ ******************************************************************/
+
+#include <stdio.h>
+
+#define NUM_ELEMENTS 1000
+
+#define sum 0
+#define average 0
+
+int main(void) {
+  double dataNumbers[NUM_ELEMENTS], smallestnum = 1, largestnum = 1, stopNum;
+  int c = 0;
+  double sumAll, averageAll;
+  int largestLocal = 1, smallestLocal = 1, largestSwap = 1, smallestSwap = 1;
+
+  // Printing name and operation
+  printf("Lab #7 - Thomas Lee, Ethan Isayas\n");
+  printf("Program to read in and manipulate floating\n");
+  printf("point data in an array\n\n");
+
+  // obtaining data with negative number stopping
+  printf("Enter data numbers followed by a -1\n");
+
+  dataNumbers[0] = 0;
+  for (int i = 1; dataNumbers[i - 1] >= 0; i++) {
+    scanf("%lf", &dataNumbers[i]);
+    c += 1;
+    if (dataNumbers[i] < 0) {
+      c -= 1;
+      break;
+    }
+  }
+
+  // BIG SMALL NUMBER
+  smallestnum = dataNumbers[1];
+  largestnum = dataNumbers[1];
+  for (int i = 1; i <= c; i++) {
+    if (smallestnum > dataNumbers[i]) {
+      smallestnum = dataNumbers[i];
+      smallestLocal = i;
+    }
+    if (largestnum < dataNumbers[i]) {
+      largestnum = dataNumbers[i];
+      largestLocal = i;
+    }
+  }
+
+  // sum and average
+  sumAll = 0;
+  for (int i = 1; i <= c; i++) {
+    sumAll = sumAll + dataNumbers[i];
+  }
+  averageAll = sumAll / c;
+
+  //Printing results
+  printf("smallest number at index: %d = %0.2lf\n", smallestLocal - 1, smallestnum);
+  printf("largest number at index: %d = %0.2lf\n", largestLocal - 1, largestnum);
+  printf("array sum = %0.2lf, ", sumAll);
+  printf("array average = %0.2lf\n\n", averageAll);
+  printf(" Original Array\n");
+  printf("----------------------------------------\n");
+
+  // PRINT ORIGINAL ARRAY
+  for (int i = 1; i <= c; i++) {
+    printf("%0.2lf ", dataNumbers[i]);
+    if(i%10 == 0) {
+      printf("\n");
+    }
+  }
+
+  printf("\n\n Modified Array\n");
+  printf("----------------------------------------\n");
+  //BIGGEST SWAP
+  largestSwap = dataNumbers[1];
+  dataNumbers[1] = dataNumbers[largestLocal];
+  dataNumbers[largestLocal] = largestSwap;
+  
+  //SMALLEST SWAP
+  smallestSwap = dataNumbers[c];
+  dataNumbers[c] = dataNumbers[smallestLocal];
+  dataNumbers[smallestLocal] = smallestSwap;
+
+  // PRINT MODIFIED ARRAY
+  for (int i = 1; i <= c; i++) {
+    printf("%0.2lf ", dataNumbers[i]);
+    if(i%10 == 0) {
+      printf("\n");
+    }
+  }
+
+  return 0;
+}
+
