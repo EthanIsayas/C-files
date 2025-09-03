@@ -1,0 +1,101 @@
+3/30/25 
+/******************************************************************
+* Program Assignment #3
+*
+* Programmer: Ethan Isayas 
+*
+* Due Date: 3/30/25
+*
+* EGRE 245, Spring 2025 Instructor: Mark Schwitzerlett
+*
+* Pledge: I have neither given nor received unauthorized aid on this program.
+*
+* Description: Geographical distance calculator. 
+*
+* Input: Two Coordinates
+*
+* Output: Distance between coordinates
+*
+******************************************************************/
+
+#include <stdio.h>
+#include <math.h>
+
+#define PI 3.14159265358979323846
+#define RAD 6371.0 // Earth's radius in km
+#define DEG_TO_RAD (PI / 180.0)
+#define RAD_TO_DEG (180.0 / PI)
+
+double dms_to_decimal(int d, int m, double s, char dir) {
+    double dec;
+    dec = d + (m / 60.0) + (s / 3600.0);
+    if (dir == 'S' || dir == 'W') {
+        dec = -dec;
+    }
+    return dec;
+}
+
+void MATH(double lat1, double lon1, double lat2, double lon2) {
+    lat1 = lat1 * DEG_TO_RAD;
+    lon1 = lon1 * DEG_TO_RAD;
+    lat2 = lat2 * DEG_TO_RAD;
+    lon2 = lon2 * DEG_TO_RAD;
+    
+    double dlat = lat2 - lat1;
+    double dlon = lon2 - lon1;
+    
+    double a = sin(dlat / 2) * sin(dlat / 2) + cos(lat1) * cos(lat2) * sin(dlon / 2) * sin(dlon / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double dist = RAD * c;
+    
+    double y = sin(dlon) * cos(lat2);
+    double x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dlon);
+    double initial_bearing = atan2(y, x) * RAD_TO_DEG;
+    initial_bearing = fmod((initial_bearing + 360), 360);
+    
+    y = sin(-dlon) * cos(lat1);
+    x = cos(lat2) * sin(lat1) - sin(lat2) * cos(lat1) * cos(-dlon);
+    double final_bearing = atan2(y, x) * RAD_TO_DEG;
+    final_bearing = fmod((final_bearing + 360), 360);
+    
+    printf("Distance = %.2f km\n", dist);
+    printf("Initial Bearing = %.2f degrees\n", initial_bearing);
+    printf("Final Bearing = %.2f degrees\n", final_bearing);
+}
+
+int main() {
+    char r;
+    do {
+        int d1, m1, d2, m2;
+        double s1, s2;
+        char dir1, dir2;
+        printf("Programming Assignment #3 Great Circle Distance - Ethan Isayas\n");
+        printf("EGRE 245: Introduction to Programming Using C, Due: March 30, 2025\n\n");
+        
+        printf("Enter 1st Latitude (DD MM SS.SS N/S): ");
+        scanf("%d %d %lf %c", &d1, &m1, &s1, &dir1);
+        printf("Enter 1st Longitude (DD MM SS.SS E/W): ");
+        scanf("%d %d %lf %c", &d2, &m2, &s2, &dir2);
+        
+        double lat1 = dms_to_decimal(d1, m1, s1, dir1);
+        double lon1 = dms_to_decimal(d2, m2, s2, dir2);
+        
+        printf("Enter 2nd Latitude (DD MM SS.SS N/S): ");
+        scanf("%d %d %lf %c", &d1, &m1, &s1, &dir1);
+        printf("Enter 2nd Longitude (DD MM SS.SS E/W): ");
+        scanf("%d %d %lf %c", &d2, &m2, &s2, &dir2);
+        
+        double lat2 = dms_to_decimal(d1, m1, s1, dir1);
+        double lon2 = dms_to_decimal(d2, m2, s2, dir2);
+        
+        MATH(lat1, lon1, lat2, lon2);
+        
+        printf("Do another? Enter 1 for Yes or 2 for No: ");
+        scanf(" %c", &r);
+    } while (r == '1');
+    
+    return 0;
+}
+
+
+
